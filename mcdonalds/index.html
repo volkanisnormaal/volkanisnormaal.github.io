@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Макдональдс</title>
+    <link rel="shortcut icon" href="44.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body{
+            overflow-x: hidden;
+        }
+        .bikini-boton {
+            width: 100%;
+            padding: 30px;
+
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .section1 {
+            padding: 50px;
+
+        }
+
+        .obvodka {
+            border-radius: 1px solid black;
+            padding: 10px;
+        }
+
+        .section2 {
+            padding: 50px;
+
+        }
+
+        .interesno {
+            width: 25%;
+        }
+
+        .section4 {
+            padding: 10px;
+        }
+
+        .interesno2 {
+            width: 50%;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .long-slider {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            /* overflow: hidden; */
+            /* transform: translateX(); */
+        }
+
+        .arrow-left,
+        .arrow-right {
+            position: absolute;
+            height: 100%;
+            top: 0;
+            z-index: 5;
+            background-color: rgba(255, 255, 255, 0.356);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            transition: 0.8s;
+            font-size: 4em;
+            user-select: none;
+        }
+
+        .arrow-left:hover,
+        .arrow-right:hover {
+            background-color: rgba(134, 131, 131, 0.658);
+            cursor: pointer;
+        }
+
+        .arrow-right {
+            right: 0;
+        }
+
+        .item-wrap {
+            /* position: absolute; */
+            display: flex;
+            height: 300px;
+            transition: 0.7s ease-out;
+            max-width: 100%;
+            overflow: auto;
+            scroll-behavior: smooth;
+        }
+
+        .slider-item {
+            /* width: 450px; */
+            margin-left: 10px;
+            /* border: 1px solid black; */
+            display: flex;
+            justify-content: center;
+        }
+
+        .item-wrap img {
+            height: 100%;
+            width: auto;
+        }
+
+
+
+        /* Works on Chrome, Edge, and Safari */
+
+        .item-wrap::-webkit-scrollbar {
+            height: 4px;
+            /* висота/ширина скрола */
+        }
+
+        .item-wrap::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0);
+            /*смужка */
+        }
+
+        .item-wrap::-webkit-scrollbar-thumb {
+            /*те, що їздить */
+            background-color: rgb(218, 218, 218);
+            border-radius: 20px;
+            /* border: 3px solid rgb(163, 163, 163);  */
+        }
+
+        .item-wrap::-webkit-scrollbar-thumb:hover {
+            /*те, що їздить */
+            background-color: rgb(0, 0, 0);
+
+        }
+
+        /* Works on Firefox */
+        .item-wrap {
+            scrollbar-width: thin;
+            scrollbar-color: rgb(235, 235, 235) rgba(215, 215, 215, 0.542);
+        }
+
+
+        .pdoduct-card {
+            padding: 20px;
+            margin-left: 20px;
+            width: 300px;
+            background-color: rgb(228, 228, 228);
+            transition: 0.8s;
+        }
+
+        .pdoduct-card:hover {
+            transform: scale(1.1);
+            background-color: rgb(247, 244, 244);
+
+        }
+
+        .tel-btn {
+            font-size: 1.1rem;
+            border: 2px solid rgb(0, 0, 0);
+        }
+
+        .tel-btn:hover {
+            box-shadow: 0px 0px 5px rgb(0, 0, 0);
+        }
+
+        .section3 {
+            background-image: url(31.jpg);
+            background-size: cover;
+            
+
+        }
+
+        .img-karta:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+
+
+        .img-karta {
+            transition: 0.5s;
+        }
+
+        .click-div-map {
+            width: 0;
+            height: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            align-items: center;
+            justify-content: center;
+            z-index: 100500;
+            display: none;
+            background-color: #2b2a2a65;
+        }
+
+        .map-wrap {
+            width: 65%;
+
+            /* animation: map-anim 0.8s; */
+        }
+
+        @keyframes map-anim {
+            0% {
+                width: 0;
+                height: 0;
+            }
+
+            100% {
+                width: 100%;
+                height: 100vh;
+            }
+        }
+        .zoom{
+            transition: 0.5s;
+        }
+        .zoom:hover{
+            transform: scaleY(2);
+        }
+        .col-lg-6{
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="click-div-map">
+        <div class="map-wrap">
+            <div class="ratio ratio-16x9">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2576.0195366339904!2d30.151046576353373!3d49.78569753500449!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d369a9450a3b2f%3A0x4694f4415d8cde67!2sMcDonald&#39;s!5e0!3m2!1sru!2sua!4v1715874325908!5m2!1sru!2sua"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <section class="section1  ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 class="left-move">
+                        Складові речовини бургера
+                    </h2>
+                    <p class="appear">
+                        ІНГРЕДІЄНТИ: Булочка, борошно, пшеничне вищого сорту, вода питна, цукор, олія соняшникова
+                        рафінована дезодорована виморожена, дріжджі, глазур «Sunset Glaze EC» (вода питна; олія
+                        соняшникова; білок рослинний; декстроза; мальтодекстрин; крохмаль), сіль кухонна, поліпшувач
+                        хлібопекарський «ПОЛ 101» (борошно пшеничне; емульгатор E472e; технологічні допоміжні засоби:
+                        ферменти (ензими)), поліпшувач хлібопекарський «Biobake Fresh 310» (борошно пшеничне; ферменти
+                        (ензими)), антиоксидант: аскорбінова кислота. Гамбургер з яловичини: яловичина 100%. Гірчиця:
+                        оцет, вода питна, гірчичний порошок (13%), сіль кухонна, спеції, натуральний ароматизатор
+                        гвоздики, екстракт спецій. Кетчуп: томатна паста, вода питна, сироп глюкозно-фруктозний, патока
+                        мальтозна, оцет натуральний, сіль кухонна, натуральний ароматизатор. Цубуля. Мариновані огірки:
+                        огірки різані, вода питна, сіль кухонна, регулятор кислотності - оцтова кислота, стабілізатор -
+                        кальцій хлористий, консервант – сорбат калію, ароматизатор. Приправа до м'яса: сіль кухонна
+                        йодована, перець чорний молотий, екстракт чорного перцю.
+                    </p>
+                </div>
+                <div class="col-lg-6 right-move">
+                    <img class="zoom " src="44.png" alt="">
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-12 appear">
+                    <h2>
+                        Тут ви можете подивитись де знаходиться наший ресторан
+                    </h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <img class="img-karta appear" src="21.png" alt="">
+
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+
+
+
+
+
+            <div class="row text-center">
+                <div class="col-12 appear">
+                    <h2>Тут ви можете дізнатися про нашу історію
+
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section2 ">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 obvodka left-move">
+                    <p>Після відновлення роботи в Україні наприкінці 2022 року McDonaldʼs відкрив сім нових ресторанів.
+                        До 24 лютого 2022‐го мережа налічувала 109 закладів, тепер – 90. Під час простою компанія не
+                        припиняла виплату повних зарплат, зберегла медичне страхування та надавала психологічну допомогу
+                        працівникам. Як результат – збереження кістяка команди. «Ми завжди працювали дуже швидко, а
+                        тепер стали ще динамічнішими», – каже генеральна директорка McDonald’s у Чехії, Словаччині і
+                        Україні Юлія Бадрітдінова, 44.</p>
+                </div>
+                <div class="col-md-4 obvodka appear">
+                    <p>«Зупинитися – отже, померти», – впевнена Юлія Бадрітдінова. У 2020 році найбільша за оборотом
+                        компанія у сфері громадського харчування не дорахувалася 20% відвідувачів. Як і у всього ринку,
+                        доставка стала для McDonald’s головним каналом зростання під час пандемії. Продажі через
+                        McDelivery зросли в 4,5 раза. У 2020‑му McDonald’s відкрив в Україні 10 ресторанів – удвічі
+                        більше, ніж роком раніше. Компанія інвестувала в нові заклади $68 млн, збільшивши свою частку
+                        ринку на 0,5 процентного пункту.
+                    </p>
+                </div>
+                <div class="col-md-4 obvodka right-move">
+                    <p>«McDonaldʼs Україна» – не тільки найбільша за оборотом компанія у сфері громадського харчування,
+                        а й головний драйвер розвитку ринку доставки їжі. На популярну мережу фастфуду припадає до
+                        половини замовлень у найбільших агрегаторах Glovo і Raketa. Завдяки досягнутим обсягам у
+                        компанії ексклюзивні умови: зона доставки обмежена 1,5 км, комісія 10% замість загальноприйнятих
+                        30%, розповідає засновник сервісу доставки Mister. AM Ярослав Циганенко. Як і у всього ринку,
+                        доставка – найприродніший для McDonaldʼs канал зростання в епоху пандемії.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 obvodka left-move">
+                    <p>Під торговою маркою «МакДональдз» на середину червня 2009 року працювало 32 060 ресторанів у 118
+                        країнах світу (в тому числі близько 14 000 з них розташовані в США). З них значна частина (25
+                        578) керувалися по франчайзингу, тому асортимент ресторанів, розмір і склад порцій може сильно
+                        відрізнятися в різних країнах.</p>
+                </div>
+                <div class="col-md-4 obvodka appear">
+                    <p>До кінця 2010 року дизайн і внутрішній вигляд всіх закладів мережі приведено до єдиного зразка.
+                        Крайній заклад був відкритий у м. Львові[14] на вулиці Зеленій, 147-А 19 грудня 2023 року.
+                        Наступне відкриття очікується в м. Чернівці на перетині вулиці Героїв Майдану та проспекту
+                        Незалежності. Це буде перший заклад мережі у місті та буде двоповерховим.
+
+
+                    </p>
+                </div>
+                <div class="col-md-4 obvodka right-move">
+                    <p>За підсумками 2010 року корпорація має 32 737 ресторанів по всьому світу після Subway.
+
+                        Асортимент ресторанів складається з гамбургерів (у тому числі з «БігМака»), сендвічів, картоплі
+                        фрі, десертів, напоїв тощо. У більшості країн світу в ресторанах мережі продають пиво, проте в
+                        Україні ресторани «МакДональдз» повністю безалкогольні.
+
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 obvodka left-move">
+                    <p>У 1954 році — Рей Крок придбав у братів Мак-Дональдів право виступати ексклюзивним агентом із
+                        франчайзингу.</p>
+                </div>
+                <div class="col-md-4 obvodka appear">
+                    <p>У 1955 році — відкрив свій перший «McDonald's» в містечку Дес-Плейнз, штат Іллінойс (нині — музей
+                        корпорації).
+
+                    </p>
+                </div>
+                <div class="col-md-4 obvodka right-move">
+                    <p>У 1955 році — Кроком була зареєстрована компанія McDonald's System, Inc (в 1960 році
+                        перейменована на McDonald's Corporation).
+
+                    </p>
+                </div>
+            </div>
+
+            <div class="row text-center">
+                <div class="col-12">
+                    <h1 class="left-move"> Актуальна ціна:</h1>
+                    <h2 class="right-move">Гамбургер - 45 грн</h2>
+                    <h2 class="left-move">Чизбургер - 52 грн</h2>
+                    <h2 class="right-move">Біг-мак - 96 грн</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="left-move">Наші інгредіенти чисті й натуральні цими інгредієнтами є
+                    </p>
+                    <p class="left-move">Біфштекс із натуральної яловичини,</p>
+                    <p class="left-move"> Цибуля, шматочок маринованого огірка,</p>
+                    <p class="left-move"> Заправлені гірчицею і кетчупом,</p>
+                    <p class="left-move"> У запашній булочці з
+                        пшеничного борошна.</p>
+                </div>
+                <div class="col-md-6"><img src="16.jpg" alt="" class="interesno2 right-move"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="">
+        <!-- <div class="container"> -->
+        <!-- <div class="row"> -->
+        <!-- <div class="col-12"> -->
+        <div class="long-slider">
+            <div class="arrow-left">
+                <p> &lsaquo;</p>
+            </div>
+            <div class="arrow-right">
+                <p>&rsaquo;</p>
+            </div>
+            <div class="item-wrap">
+                <div class="slider-item"><img src="2.jpg" alt=""></div>
+                <div class="slider-item"><img src="3.jpeg" alt=""></div>
+                <div class="slider-item"><img src="22.jpg" alt=""></div>
+                <div class="slider-item"><img src="23.jpg" alt=""></div>
+                <div class="slider-item"><img src="24.jpg" alt=""></div>
+                <div class="slider-item"><img src="25.jpg" alt=""></div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+    </section>
+
+
+    <section class="section3">
+
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12 top-move">
+                    <h2>
+                        Тут ви можете побачити ім'я наших спонсорів
+                    </h2>
+                </div>
+            </div>
+
+            <div class="row  bikini-boton fon1">
+                <div class="col-md-6  ">
+                    <h3 class="text-center appear">Glovo</h3>
+                    <p class="appear">
+                        Через мобільний додаток клієнти можуть замовити будь-який товар невеликого розміру (40x40x30см)
+                        вагою до 9 кг.[5] Переважно це їжа, ліки, та документи. У Європі, наприклад, 85 % замовлень[6]
+                        складає покупка і доставка їжі. Після оформлення замовлення користувач має можливість
+                        відстежувати переміщення кур'єра на маршруті в режимі реального часу.
+
+                        Більшість кур'єрів пересуваються на велосипедах, мотоциклах і скутерах[7].
+
+                        Сервіс доступний через десктоп, IOS та Android.
+                    </p>
+                </div>
+
+                <div class="col-md-6 ">
+                    <h3 class="text-center appear">UberEats</h3>
+                    <p class="appear">Uber Eats — это онлайн-платформа заказа и доставки еды, запущенная компанией Uber в 2014 году.[4]
+                        Доставка еды осуществляется курьерами различными способами: на автомобилях, скутерах,
+                        велосипедах или пешком.[5] По состоянию на 2021 год он работает в более чем 6000 городах в 45
+                        странах.
+
+                        Процесс доставки еды осуществляют водители Uber. [7] В 2020 году на компанию подали в суд за
+                        антимонопольное манипулирование ценами, например, за принуждение ресторанов взимать ту же цену
+                        за доставку, что и за обед, если ресторан хочет быть указан в приложении Uber Eats, а также
+                        взимание платы в размере 13– 40% дохода.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script>
+
+
+
+
+ScrollReveal().reveal('.left-move', { delay: 500, origin:'left', distance: '200px' });
+ScrollReveal().reveal('.right-move', { delay: 500, origin:'right', distance: '200px' });
+ScrollReveal().reveal('.top-move', { delay: 500, origin:'top', distance: '200px' });
+ScrollReveal().reveal('.appear', { delay: 500   });
+
+
+
+        let toLeft = document.querySelector('.arrow-left');
+        let toRight = document.querySelector('.arrow-right');
+        let slider = document.querySelector('.item-wrap');
+
+
+        // let sliderItem = document.querySelectorAll('.slider-item')
+
+
+        toLeft.addEventListener('click', function () {
+            if (slider.scrollLeft <= 0) {
+                slider.scrollLeft += slider.scrollWidth;
+            }
+            else {
+                slider.scrollLeft -= 400;
+            }
+            console.log('azaza');
+        })
+
+
+        toRight.addEventListener('click', function () {
+            let maxScrollRight = slider.scrollWidth - slider.clientWidth;
+            if (slider.scrollLeft >= maxScrollRight - 1) {
+                slider.scrollLeft -= slider.scrollWidth;
+            }
+            else {
+                slider.scrollLeft += 400;
+            }
+            console.log('azaza');
+
+        })
+
+        let imgMap = document.querySelector('.img-karta');
+        let divMap = document.querySelector('.click-div-map');
+
+        function showMap() {
+            divMap.style.display = 'flex';
+            divMap.style.animation = 'map-anim 0.8s';
+            divMap.style.width = '100%';
+            divMap.style.height = '100vh'
+
+
+
+        }
+
+        imgMap.addEventListener('click', showMap);
+
+        divMap.onclick = () => {
+            divMap.style.display = 'none';
+
+            document.body.style.position = '';
+            document.body.style.top = '';
+        }
+    </script>
+</body>
+
+</html>
